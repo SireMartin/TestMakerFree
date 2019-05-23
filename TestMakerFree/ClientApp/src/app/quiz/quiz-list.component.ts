@@ -1,4 +1,4 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, Input, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
@@ -7,16 +7,34 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ['./quiz-list.component.css']
 })
 
-export class QuizListComponent {
+export class QuizListComponent implements OnInit{
+  @Input() class: string;
   title: string;
   selectedQuiz: Quiz;
   quizzes: Quiz[];
 
-  constructor(http: HttpClient,
-    @Inject('BASE_URL') baseUrl: string) {
+  constructor(private http: HttpClient,
+    @Inject('BASE_URL') private baseUrl: string) { //private keyword maakt hier private class variabelen  van (p130)
     this.title = "Latest Quizzes";
-    var url = baseUrl + "api/quiz/Latest/5";
-    http.get<Quiz[]>(url).subscribe(result => {
+    this.baseUrl = baseUrl;
+    this.http = http;
+  }
+
+  ngOnInit() {
+    console.log("QuizListComponent instantiated with the following class : " + this.class);
+    var url = this.baseUrl + "api/quiz/";
+    switch (this.class) {
+      case "byTitle":
+        url += "ByTitle/";
+        break;
+      case "random":
+        url += "Random/";
+        break;
+      case "latest":
+      default:
+        url += "latest/";
+    }
+    this.http.get<Quiz[]>(url).subscribe(result => {
       this.quizzes = result;
     }, error => console.error(error));
   }

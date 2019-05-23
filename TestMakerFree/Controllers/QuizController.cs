@@ -26,7 +26,7 @@ namespace TestMakerFree.Controllers
         }
 
         //GET api/quiz/latest
-        [HttpGet("Latest/{num}")]
+        [HttpGet("Latest/{num:int?}")]
         public IActionResult Latest(int num = 10)
         {
             var sampleQuizzes = new List<QuizViewModel>();
@@ -45,7 +45,7 @@ namespace TestMakerFree.Controllers
                     Id = i,
                     Title = $"Sample Quiz {i}",
                     Description = "This is a sample quiz",
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.Now, 
                     LastModifiedDate = DateTime.Now
                 });
             }
