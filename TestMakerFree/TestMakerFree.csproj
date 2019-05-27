@@ -25,12 +25,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\about\about.component.ts" />
+    <None Remove="ClientApp\src\app\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\pagenotfound\filenotfound.component.ts" />
     <None Remove="ClientApp\src\app\quiz\quiz-list.component.ts" />
     <None Remove="ClientApp\src\app\quiz\quiz.component.ts" />
     <None Remove="ClientApp\src\app\quiz\quiz.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\about\about.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\pagenotfound\filenotfound.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\quiz\quiz-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\quiz\quiz.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\quiz\quiz.ts" />

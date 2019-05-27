@@ -9,6 +9,9 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { QuizListComponent } from './quiz/quiz-list.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { LoginComponent } from './login/login.component';
+import { AboutComponent } from './about/about.component';
+import { PageNotFoundComponent } from './pagenotfound/filenotfound.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { QuizComponent } from './quiz/quiz.component';
     NavMenuComponent,
     HomeComponent,
     QuizListComponent,
-    QuizComponent
+    QuizComponent,
+    LoginComponent,
+    AboutComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -26,7 +32,9 @@ import { QuizComponent } from './quiz/quiz.component';
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'quiz/:id', component: QuizComponent },
-      { path: '**', redirectTo: 'home' }
+      { path: 'about', component: AboutComponent },
+      { path: 'login', component: LoginComponent },
+      { path: '**', component: PageNotFoundComponent }
     ])
   ],
   providers: [],

@@ -17,7 +17,6 @@ export class QuizListComponent implements OnInit{
   constructor(private http: HttpClient,
     @Inject('BASE_URL') private baseUrl: string,
     private router: Router) { //private keyword maakt hier private class variabelen  van (p130)
-    this.title = "Latest Quizzes";
     this.baseUrl = baseUrl;
     this.http = http;
   }
@@ -28,13 +27,16 @@ export class QuizListComponent implements OnInit{
     switch (this.class) {
       case "byTitle":
         url += "ByTitle/";
+        this.title = "Quizzes by Title";
         break;
       case "random":
         url += "Random/";
+        this.title = "Random Quizzes";
         break;
       case "latest":
       default:
         url += "latest/";
+        this.title = "Latest Quizzes";
     }
     this.http.get<Quiz[]>(url).subscribe(result => {
       this.quizzes = result;
