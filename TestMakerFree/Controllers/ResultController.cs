@@ -4,61 +4,70 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TestMakerFree.ViewModels;
+using TestMakerFree.Data;
 using Newtonsoft.Json;
+using Mapster;
 
 namespace TestMakerFree.Controllers
 {
-    [Route("api/[controller]")]
-    public class ResultController : Controller
+    public class ResultController : BaseApiController
     {
-        [HttpGet("All/{quizId}")]
-        public IActionResult All(int quizId)
-        {
-            var sampleResults = new List<ResultViewModel>();
-            sampleResults.Add(new ResultViewModel()
-            {
-                Id = 1,
-                QuizId = quizId,
-                Text = "What do you value most in your life?",
-                CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.Now
-            });
-            for (int i = 2; i <= 5; ++i)
-            {
-                sampleResults.Add(new ResultViewModel()
-                {
-                    Id = i,
-                    QuizId = quizId,
-                    Text = $"Sample Question {i}",
-                    CreatedDate = DateTime.Now,
-                    LastModifiedDate = DateTime.Now
-                });
-            }
-            return new JsonResult(sampleResults, new JsonSerializerSettings() { Formatting = Formatting.Indented });
-        }
+        private ApplicationDbContext DbContext;
+
+        public ResultController(ApplicationDbContext argDbContext) : base(argDbContext)
+        {}
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Content("Not implemented get (yet)");
+            var result = DbContext.Results.Where(x => x.Id == id).FirstOrDefault();
+            if (result == null) { return NotFound(new { Error = $"No Result ID {id} has been found" }); }
+            return new JsonResult(result.Adapt<ResultViewModel>(), JsonSettings);
         }
 
         [HttpPut]
-        public IActionResult Put()
+        public IActionResult Put([FromBody]ResultViewModel model)
         {
-            return Content("Not implemented put (yet)");
+            if (model == null) { return new StatusCodeResult(500); }
+            var result = model.Adapt<Data.Models.Result>();
+            result.CreatedDate = DateTime.Now;
+            result.LastModifiedDate = result.CreatedDate;
+            DbContext.Results.Add(result);
+            DbContext.SaveChanges();
+            return new JsonResult(result.Adapt<ResultViewModel>(), JsonSettings);
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post([FromBody]ResultViewModel model)
         {
-            return Content("Not implemented post (yet)");
+            if (model == null) { return new StatusCodeResult(500); }
+            var result = DbContext.Results.Where(x => x.Id == model.Id).FirstOrDefault();
+            if (result == null) { return NotFound(new { Error = $"No Result ID  {model.Id} has been found" }); }
+            result.QuizId = model.QuizId;
+            result.Text = model.Text;
+            result.MinValue = model.MinValue;
+            result.MaxValue = model.MaxValue;
+            result.Notes = model.Notes;
+            result.LastModifiedDate = result.CreatedDate;
+            DbContext.SaveChanges();
+            return new JsonResult(result.Adapt<ResultViewModel>(), JsonSettings);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return Content("Not implemented delete (yet)");
+            var result = DbContext.Results.Where(x => x.Id == id).FirstOrDefault();
+            if (result == null) { return NotFound(new { Error = $"No Result ID {id} has been found" }); }
+            DbContext.Remove(result);
+            DbContext.SaveChanges();
+            return new OkResult();
+        }
+
+        [HttpGet("All/{quizId}")]
+        public IActionResult All(int quizId)
+        {
+            var results = DbContext.Results.Where(x => x.QuizId == quizId).ToArray();
+            return new JsonResult(results.Adapt<ResultViewModel[]>(), JsonSettings);
         }
     }
 }

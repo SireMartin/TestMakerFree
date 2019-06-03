@@ -5,60 +5,101 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TestMakerFree.ViewModels;
+using TestMakerFree.Data;
+using Mapster;
 
 namespace TestMakerFree.Controllers
 {
-    [Route("api/[controller]")]
-    public class QuestionController : Controller
+    public class QuestionController : BaseApiController
     {
-        [HttpGet("All/{quizId}")]
-        public IActionResult All(int quizId)
-        {
-            var sampleQuestions = new List<QuestionViewModel>();
-            sampleQuestions.Add(new QuestionViewModel()
-            {
-                Id = 1,
-                QuizId = quizId,
-                Text = "What do you value most in life?",
-                CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.Now
-            });
-            for (int i = 2; i <= 5; ++i)
-            {
-                sampleQuestions.Add(new QuestionViewModel()
-                {
-                    Id = i,
-                    QuizId = quizId,
-                    Text = $"Sample question {i}",
-                    CreatedDate = DateTime.Now,
-                    LastModifiedDate = DateTime.Now
-                });
-            }
-            return new JsonResult(sampleQuestions, new JsonSerializerSettings() { Formatting = Formatting.Indented });
-        }
+        private ApplicationDbContext DbContext;
+
+        public QuestionController(ApplicationDbContext argDbContext) : base(argDbContext)
+        { }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Content("Not implemented get (yet)");
+            var question = DbContext.Questions.Where(x => x.Id == id).FirstOrDefault();
+            if (question == null)
+            {
+                return NotFound(new
+                {
+                    Error = $"Question ID {id} has not been found"
+                });
+            }
+            return new JsonResult(question.Adapt<QuizViewModel>(), JsonSettings);
         }
 
         [HttpPut]
-        public IActionResult Put()
+        public IActionResult Put([FromBody]QuestionViewModel model)
         {
-            return Content("Not implemented put (yet)");
+            if (model == null)
+            {
+                return new StatusCodeResult(500);
+            }
+
+            var question = model.Adapt<Data.Models.Question>();
+            /*
+            //override those properties that should be set from server-side only
+            question.QuizId = model.QuizId;
+            question.Text = model.Text;
+            question.Notes = model.Notes;*/
+            //properties set from server-side
+            question.CreatedDate = DateTime.Now;
+            question.LastModifiedDate = question.CreatedDate;
+            //add the new question
+            DbContext.Questions.Add(question);
+            //persist the changes into the database
+            DbContext.SaveChanges();
+            //return the newly-created question to the client
+            return new JsonResult(question.Adapt<QuestionViewModel>(), JsonSettings);
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post([FromBody]QuestionViewModel model)
         {
-            return Content("Not implemented post (yet)");
+            var question = DbContext.Questions.Where(x => x.Id == model.Id).FirstOrDefault();
+            if (question == null)
+            {
+                return NotFound(new
+                {
+                    Error = $"Question ID {model.Id} has not been found"
+                });
+            }
+            //handle the update (without object mapping) by manually assigning the properties we want to add to the request
+            question.QuizId = model.QuizId;
+            question.Text = model.Text;
+            question.Notes = model.Notes;
+            //properties set from server side
+            question.LastModifiedDate = question.CreatedDate;
+            //persist the changes into the database
+            DbContext.SaveChanges();
+            //return the updated Quiz to the client
+            return new JsonResult(question.Adapt<QuestionViewModel>(), JsonSettings);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return Content("Not implemented delete (yet)");
+            var question = DbContext.Questions.Where(x => x.Id == id).FirstOrDefault();
+            if (question == null)
+            {
+                return NotFound(new
+                {
+                    Error = $"Question ID {id} has not been found"
+                });
+            }
+            DbContext.Remove(question);
+            DbContext.SaveChanges();
+            return new OkResult();
+        }
+
+        [HttpGet("All/{quizId}")]
+        public IActionResult All(int quizId)
+        {
+            var questions = DbContext.Questions.Where(x => x.QuizId == quizId).ToArray();
+            return new JsonResult(questions.Adapt<QuestionViewModel[]>(), JsonSettings);
         }
     }
 }

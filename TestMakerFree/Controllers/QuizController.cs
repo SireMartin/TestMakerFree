@@ -10,15 +10,12 @@ using Mapster;
 
 namespace TestMakerFree.Controllers
 {
-    [Route("api/[controller]")]
-    public class QuizController : Controller
+    public class QuizController : BaseApiController
     {
         private ApplicationDbContext dbContext;
 
-        public QuizController(ApplicationDbContext argDbContext)
-        {
-            this.dbContext = argDbContext;
-        }
+        public QuizController(ApplicationDbContext argDbContext) : base(argDbContext)
+        {}
 
         //GET api/quiz/{id}
         [HttpGet("{id}")]
@@ -32,7 +29,7 @@ namespace TestMakerFree.Controllers
                     Error = $"Quiz ID {id} has not been found"
                 });
             }
-            return new JsonResult(quiz.Adapt<QuizViewModel>(), new JsonSerializerSettings() { Formatting = Formatting.Indented });
+            return new JsonResult(quiz.Adapt<QuizViewModel>(), JsonSettings);
         }
 
         //GET api/quiz/latest
@@ -40,21 +37,21 @@ namespace TestMakerFree.Controllers
         public IActionResult Latest(int num = 10)
         {
             var latest = dbContext.Quizzes.OrderByDescending(i => i.CreatedDate).Take(num).ToArray();
-            return new JsonResult(latest.Adapt<QuizViewModel[]>(), new JsonSerializerSettings() { Formatting = Formatting.Indented });
+            return new JsonResult(latest.Adapt<QuizViewModel[]>(), JsonSettings);
         }
 
         [HttpGet("ByTitle/{num:int?}")]
         public IActionResult ByTitle(int num = 10)
         {
             var byTitle = dbContext.Quizzes.OrderBy(i => i.Title).Take(num).ToArray();
-            return new JsonResult(byTitle.Adapt<QuizViewModel[]>(), new JsonSerializerSettings() { Formatting = Formatting.Indented });
+            return new JsonResult(byTitle.Adapt<QuizViewModel[]>(), JsonSettings);
         }
 
         [HttpGet("Random/{num:int?}")]
         public IActionResult Random(int num = 10)
         {
             var random = dbContext.Quizzes.OrderBy(i => Guid.NewGuid()).Take(num).ToArray();
-            return new JsonResult(random.Adapt<QuizViewModel[]>(), new JsonSerializerSettings() { Formatting = Formatting.Indented });
+            return new JsonResult(random.Adapt<QuizViewModel[]>(), JsonSettings);
         }
 
         [HttpPut]
@@ -80,7 +77,7 @@ namespace TestMakerFree.Controllers
             //persist the changes in the DB
             dbContext.SaveChanges();
             //return the newly-created Quiz to the client
-            return new JsonResult(quiz.Adapt<QuizViewModel>(), new JsonSerializerSettings() { Formatting = Formatting.Indented });
+            return new JsonResult(quiz.Adapt<QuizViewModel>(), JsonSettings);
         }
 
         [HttpPost]
@@ -109,7 +106,7 @@ namespace TestMakerFree.Controllers
             //persist the changes in the DB
             dbContext.SaveChanges();
             //return the newly-created Quiz to the client
-            return new JsonResult(quiz.Adapt<QuizViewModel>(), new JsonSerializerSettings() { Formatting = Formatting.Indented });
+            return new JsonResult(quiz.Adapt<QuizViewModel>(), JsonSettings);
         }
 
         [HttpDelete("{id}")]
