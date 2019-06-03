@@ -43,7 +43,7 @@ export class QuestionListComponent implements OnChanges {
   }
 
   onEdit(question: Question) {
-    this.router.navigate(["question/edit", this.quiz.Id]);
+    this.router.navigate(["question/edit", question.Id]);
   }
 
   onDelete(question: Question) {
