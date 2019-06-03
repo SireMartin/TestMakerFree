@@ -12,8 +12,6 @@ namespace TestMakerFree.Controllers
 {
     public class QuestionController : BaseApiController
     {
-        private ApplicationDbContext DbContext;
-
         public QuestionController(ApplicationDbContext argDbContext) : base(argDbContext)
         { }
 

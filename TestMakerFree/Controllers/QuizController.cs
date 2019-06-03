@@ -12,8 +12,6 @@ namespace TestMakerFree.Controllers
 {
     public class QuizController : BaseApiController
     {
-        private ApplicationDbContext dbContext;
-
         public QuizController(ApplicationDbContext argDbContext) : base(argDbContext)
         {}
 
@@ -21,7 +19,7 @@ namespace TestMakerFree.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var quiz = dbContext.Quizzes.Where(i => i.Id == id).FirstOrDefault();
+            var quiz = DbContext.Quizzes.Where(i => i.Id == id).FirstOrDefault();
             if (quiz == null)
             {
                 return NotFound(new
@@ -36,21 +34,21 @@ namespace TestMakerFree.Controllers
         [HttpGet("Latest/{num:int?}")]
         public IActionResult Latest(int num = 10)
         {
-            var latest = dbContext.Quizzes.OrderByDescending(i => i.CreatedDate).Take(num).ToArray();
+            var latest = DbContext.Quizzes.OrderByDescending(i => i.CreatedDate).Take(num).ToArray();
             return new JsonResult(latest.Adapt<QuizViewModel[]>(), JsonSettings);
         }
 
         [HttpGet("ByTitle/{num:int?}")]
         public IActionResult ByTitle(int num = 10)
         {
-            var byTitle = dbContext.Quizzes.OrderBy(i => i.Title).Take(num).ToArray();
+            var byTitle = DbContext.Quizzes.OrderBy(i => i.Title).Take(num).ToArray();
             return new JsonResult(byTitle.Adapt<QuizViewModel[]>(), JsonSettings);
         }
 
         [HttpGet("Random/{num:int?}")]
         public IActionResult Random(int num = 10)
         {
-            var random = dbContext.Quizzes.OrderBy(i => Guid.NewGuid()).Take(num).ToArray();
+            var random = DbContext.Quizzes.OrderBy(i => Guid.NewGuid()).Take(num).ToArray();
             return new JsonResult(random.Adapt<QuizViewModel[]>(), JsonSettings);
         }
 
@@ -71,11 +69,11 @@ namespace TestMakerFree.Controllers
             quiz.CreatedDate = DateTime.Now;
             quiz.LastModifiedDate = quiz.CreatedDate;
             //set a temp author as user id
-            quiz.UserId = dbContext.Users.Where(x => x.UserName == "Admin").FirstOrDefault().Id;
+            quiz.UserId = DbContext.Users.Where(x => x.UserName == "Admin").FirstOrDefault().Id;
             //add the new quiz
-            dbContext.Quizzes.Add(quiz);
+            DbContext.Quizzes.Add(quiz);
             //persist the changes in the DB
-            dbContext.SaveChanges();
+            DbContext.SaveChanges();
             //return the newly-created Quiz to the client
             return new JsonResult(quiz.Adapt<QuizViewModel>(), JsonSettings);
         }
@@ -87,7 +85,7 @@ namespace TestMakerFree.Controllers
             {
                 return new StatusCodeResult(500);
             }
-            var quiz = dbContext.Quizzes.Where(q => q.Id == model.Id).FirstOrDefault();
+            var quiz = DbContext.Quizzes.Where(q => q.Id == model.Id).FirstOrDefault();
             //handle request for non-existing quizzes
             if (quiz == null)
             {
@@ -104,7 +102,7 @@ namespace TestMakerFree.Controllers
             //properties set from server-side
             quiz.LastModifiedDate = DateTime.Now;
             //persist the changes in the DB
-            dbContext.SaveChanges();
+            DbContext.SaveChanges();
             //return the newly-created Quiz to the client
             return new JsonResult(quiz.Adapt<QuizViewModel>(), JsonSettings);
         }
@@ -113,7 +111,7 @@ namespace TestMakerFree.Controllers
         public IActionResult Delete(int id)
         {
             //retrieve the quiz from the database
-            var quiz = dbContext.Quizzes.Where(x => x.Id == id).FirstOrDefault();
+            var quiz = DbContext.Quizzes.Where(x => x.Id == id).FirstOrDefault();
             if (quiz == null)
             {
                 return NotFound(new
@@ -122,9 +120,9 @@ namespace TestMakerFree.Controllers
                 });
             }
             //delete the object from the dbcontext
-            dbContext.Quizzes.Remove(quiz);
+            DbContext.Quizzes.Remove(quiz);
             //persist the changes in the database
-            dbContext.SaveChanges();
+            DbContext.SaveChanges();
             //return an HTTP Status 200 (OK)
             return new OkResult();
         }
