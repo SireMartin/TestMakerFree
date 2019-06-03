@@ -39,7 +39,7 @@ namespace TestMakerFree.Controllers
         [HttpGet("Latest/{num:int?}")]
         public IActionResult Latest(int num = 10)
         {
-            var latest = dbContext.Quizzes.OrderBy(i => i.CreatedDate).Take(num).ToArray();
+            var latest = dbContext.Quizzes.OrderByDescending(i => i.CreatedDate).Take(num).ToArray();
             return new JsonResult(latest.Adapt<QuizViewModel[]>(), new JsonSerializerSettings() { Formatting = Formatting.Indented });
         }
 
