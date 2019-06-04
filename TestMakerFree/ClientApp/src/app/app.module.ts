@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './pagenotfound/filenotfound.component';
 import { QuizEditComponent } from './quiz/quiz-edit.component';
 import { QuestionListComponent } from './question/question-list.component';
 import { QuestionEditComponent } from './question/question-edit.component';
+import { AnswerListComponent } from './answer/answer-list.component';
  
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { QuestionEditComponent } from './question/question-edit.component';
     QuizEditComponent,
     QuestionListComponent,
     //deze eens vergeten toe te voegen: browser F12 = Uncaught Error: Component QuestionEditComponent is not part of any NgModule or the module has not been imported into your module.
-    QuestionEditComponent
+    QuestionEditComponent,
+    AnswerListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

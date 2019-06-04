@@ -29,7 +29,6 @@ export class QuestionListComponent implements OnChanges {
         //execute the http request and retrieve the result
         this.loadData();
       }
-      this.loadData();
     }
   }
 
