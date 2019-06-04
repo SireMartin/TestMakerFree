@@ -26,7 +26,7 @@ namespace TestMakerFree.Controllers
                     Error = $"Question ID {id} has not been found"
                 });
             }
-            return new JsonResult(question.Adapt<QuizViewModel>(), JsonSettings);
+            return new JsonResult(question.Adapt<QuestionViewModel>(), JsonSettings);
         }
 
         [HttpPut]
