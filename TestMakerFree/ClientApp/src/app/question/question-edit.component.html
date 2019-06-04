@@ -1,0 +1,11 @@
+<h2>{{title}}</h2>
+<div class="question-edit">
+  <label for="text">Question Text:</label>
+  <br />
+  <textarea id="text" [(ngModel)]="question.Text" placeholder="Enter a suitable text"></textarea>
+</div>
+<div>
+  <input type="button" *ngIf="editMode" value="Apply Changes" (click)="onSubmit(question)" />
+  <input type="button" *ngIf="!editMode" value="Create the Question" (click)="onSubmit(question)" />
+  <input type="button" value="Cancel" (click)="onBack()" />
+</div>

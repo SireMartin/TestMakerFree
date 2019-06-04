@@ -21,6 +21,7 @@ export class QuizEditComponent {
     @Inject('BASE_URL') private baseUrl: string) {
 
     this.quiz = <Quiz>{};
+    //een + voor een variabele maakt zo nodig van een string een number
     var id = +this.activatedRoute.snapshot.params["id"];
     if (id) {
       this.editMode = true;

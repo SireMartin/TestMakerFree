@@ -18,7 +18,7 @@
     </tbody>
   </table>
 </div>
-<div *ngIf="question.lengt == 0">
+<div *ngIf="questions.length == 0">
   This quiz has no questions (yet): click the <strong>Add a new Question</strong> button to add the first one!
 </div>
 <input type="button" value="Add a new Question" (click)="onCreate()" />

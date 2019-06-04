@@ -24,11 +24,12 @@ export class QuestionListComponent implements OnChanges {
     if (typeof changes["quiz"] !== "undefined") {
       //retrieve the quiz variable change info
       var change = changes["quiz"];
-      //only perform the task if the value has been changed
-      if (change.isFirstChange()) {
+      //de eerste keer dat deze opgeroepen wordt is de quiz nog undefined (observer nog niet afgelopen op parent control)
+      if (!change.isFirstChange()) {
         //execute the http request and retrieve the result
         this.loadData();
       }
+      this.loadData();
     }
   }
 

@@ -28,14 +28,15 @@ export class QuestionEditComponent {
     //check if we're in edit-mode or not
     this.editMode = (this.activatedRoute.snapshot.url[1].path === "edit");
     if (this.editMode) {
-      //fetch the question from the server
-      var url = this.base_url + "api/question" + this.question.Id;
+      //fetch the question from the server: in this case the id is the questionId
+      var url = this.base_url + "api/question/" + id;
       this.http.get<Question>(url).subscribe(res => {
         this.question = res;
         this.title = "Edit - " + this.question.Text;
       }, error => console.log(error))
     }
     else {
+      //create new question for the Quiz: in this case the id is the quizId
       this.question.QuizId = id;
       this.title = "Create a new Question";
     }
