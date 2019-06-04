@@ -19,6 +19,7 @@ export class QuestionListComponent implements OnChanges {
     this.questions = [];
   }
 
+  //fired when the @Input() property changes : in this case the quiz member
   ngOnChanges(changes: SimpleChanges) {
     if (typeof changes["quiz"] !== "undefined") {
       //retrieve the quiz variable change info

@@ -13,7 +13,8 @@ import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
 import { PageNotFoundComponent } from './pagenotfound/filenotfound.component';
 import { QuizEditComponent } from './quiz/quiz-edit.component';
-
+import { QuestionListComponent } from './question/question-list.component';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { QuizEditComponent } from './quiz/quiz-edit.component';
     LoginComponent,
     AboutComponent,
     PageNotFoundComponent,
-    QuizEditComponent
+    QuizEditComponent,
+    QuestionListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
