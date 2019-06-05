@@ -61,7 +61,7 @@ export class QuestionEditComponent {
   }
 
   onBack() {
-    this.router.navigate(["api/quiz", this.question.QuizId]);
+    this.router.navigate(["quiz/edit", this.question.QuizId]);
   }
 
 }

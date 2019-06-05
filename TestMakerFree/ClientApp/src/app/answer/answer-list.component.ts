@@ -40,4 +40,21 @@ export class AnswerListComponent implements OnChanges{
       this.title = "Answers for question " + this.question.Text + ".";
     }, error => console.log(error));
   }
+
+  onEdit(answer: Answer) {
+    this.router.navigate(["answer/edit", answer.Id]);
+  }
+
+  onCreate(answer: Answer) {
+    this.router.navigate(["answer/create", this.question.Id]);
+  }
+
+  onDelete(answer: Answer) {
+    var url = this.baseUrl + "answer/delete/" + answer.Id;
+    this.http.delete(url).subscribe(res => {
+      console.log("Answer with ID " + answer.Id + " has been deleted");
+      //refresh the question list
+      this.loadData();
+    }, error => console.log(error));
+  }
 }
