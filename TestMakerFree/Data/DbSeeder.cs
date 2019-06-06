@@ -135,7 +135,7 @@ namespace TestMakerFree.Data
                 var question = new Question()
                 {
                     QuizId = quiz.Id,
-                    Text = "This is a sample quiestion created by the DbSeeder class for testing purposes. All the child answers are quto-generated as well",
+                    Text = "This is a sample quiestion created by the DbSeeder class for testing purposes. All the childanswers are auto-generated as well",
                     CreatedDate = createdDate,
                     LastModifiedDate = createdDate
                 };

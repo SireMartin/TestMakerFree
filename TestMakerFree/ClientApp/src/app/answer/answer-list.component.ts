@@ -50,7 +50,7 @@ export class AnswerListComponent implements OnChanges{
   }
 
   onDelete(answer: Answer) {
-    var url = this.baseUrl + "answer/delete/" + answer.Id;
+    var url = this.baseUrl + "api/answer/" + answer.Id;
     this.http.delete(url).subscribe(res => {
       console.log("Answer with ID " + answer.Id + " has been deleted");
       //refresh the question list

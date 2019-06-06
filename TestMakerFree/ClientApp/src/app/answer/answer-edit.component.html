@@ -13,8 +13,8 @@
     </select>
   </div>
   <div>
-    <input type="button" value="Apply changes" (click)="onSubmit(answer)" />
-    <input type="button" value="Create the answer" (click)="onSubmit(answer)" />
+    <input type="button" value="Apply changes" *ngIf="editMode" (click)="onSubmit(answer)" />
+    <input type="button" value="Create the answer" *ngIf="!editMode" (click)="onSubmit(answer)" />
     <input type="button" value="Cancel" (click)="onBack()" />
   </div>
 </div>

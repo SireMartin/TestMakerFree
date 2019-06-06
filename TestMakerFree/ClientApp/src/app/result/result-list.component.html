@@ -16,7 +16,6 @@
         <td *ngIf="result.MinValue !== null">{{result.MinValue}}</td>
         <td *ngIf="result.MaxValue === null">N/A</td>
         <td *ngIf="result.MaxValue !== null">{{result.MaxValue}}</td>
-        <td>{{result.MaxValue}}</td>
         <td>
           <input type="button" value="Edit" (click)="onEdit(result)" />
           <input type="button" value="Delete" (click)="onDelete(result)" />
