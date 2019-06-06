@@ -16,6 +16,9 @@ import { QuizEditComponent } from './quiz/quiz-edit.component';
 import { QuestionListComponent } from './question/question-list.component';
 import { QuestionEditComponent } from './question/question-edit.component';
 import { AnswerListComponent } from './answer/answer-list.component';
+import { AnswerEditComponent } from './answer/answer-edit.component';
+import { ResultListComponent } from './result/result-list.component';
+import { ResultEditComponent } from './result/result-edit.component';
  
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { AnswerListComponent } from './answer/answer-list.component';
     QuestionListComponent,
     //deze eens vergeten toe te voegen: browser F12 = Uncaught Error: Component QuestionEditComponent is not part of any NgModule or the module has not been imported into your module.
     QuestionEditComponent,
-    AnswerListComponent
+    AnswerListComponent,
+    AnswerEditComponent,
+    ResultListComponent,
+    ResultEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -45,6 +51,10 @@ import { AnswerListComponent } from './answer/answer-list.component';
       { path: 'quiz/:id', component: QuizComponent },
       { path: 'question/edit/:id', component: QuestionEditComponent },
       { path: 'question/create/:id', component: QuestionEditComponent },
+      { path: 'answer/edit/:id', component: AnswerEditComponent },
+      { path: 'answer/create/:id', component: AnswerEditComponent },
+      { path: 'result/edit/:id', component: ResultEditComponent },
+      { path: 'result/create/:id', component: ResultEditComponent },
       { path: 'about', component: AboutComponent },
       { path: 'login', component: LoginComponent },
       { path: '**', component: PageNotFoundComponent }
