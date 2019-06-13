@@ -19,6 +19,7 @@ import { AnswerListComponent } from './answer/answer-list.component';
 import { AnswerEditComponent } from './answer/answer-edit.component';
 import { ResultListComponent } from './result/result-list.component';
 import { ResultEditComponent } from './result/result-edit.component';
+import { QuizSearchComponent } from './quiz/quiz-search.component';
  
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ResultEditComponent } from './result/result-edit.component';
     AnswerListComponent,
     AnswerEditComponent,
     ResultListComponent,
-    ResultEditComponent
+    ResultEditComponent,
+    QuizSearchComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

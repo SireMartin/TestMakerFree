@@ -1,8 +1,7 @@
-ul.quiz_class li{
+ul.quiz_class li {
   color: #000acb;
-  cursor:pointer;
+  cursor: pointer;
 }
-
-ul.quiz_class li.selected{
+ul.quiz_class li.selected {
   background-color: #ff0000;
 }
