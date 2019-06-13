@@ -3,14 +3,16 @@
     display: none;
   }
 
-  &.search-navbar{
+  &.search-navmenu{
     display: block;
     border: 0;
     margin: 2px 0 0 0;
     padding: 5px;
     float: left;
+    /*escape the calculation value : anders gaat less dit berekenen en maakt er 20px van in de gegenereerde css, terwijl calc een css functie is
+      een string escapen doe je dmv ~"xxx" in less*/
     width: calc(~"100% - 80px");
-    max-width: calc(~"100% - 80px");
+    max-width: calc(~"100% - 20px");
     min-width: 250px;
 
     .form-group{

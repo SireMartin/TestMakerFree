@@ -1,21 +1,23 @@
 .navbar-form.search-header {
   display: none;
 }
-.navbar-form.search-navbar {
+.navbar-form.search-navmenu {
   display: block;
   border: 0;
   margin: 2px 0 0 0;
   padding: 5px;
   float: left;
+  /*escape the calculation value : anders gaat less dit berekenen en maakt er 20px van in de gegenereerde css, terwijl calc een css functie is
+      een string escapen doe je dmv ~"xxx" in less*/
   width: calc(100% - 80px);
-  max-width: calc(100% - 80px);
+  max-width: calc(100% - 20px);
   min-width: 250px;
 }
-.navbar-form.search-navbar .form-group {
+.navbar-form.search-navmenu .form-group {
   float: left;
   margin: 0 10px 0 0;
 }
-.navbar-form.search-navbar .form-group input[type="text"] {
+.navbar-form.search-navmenu .form-group input[type="text"] {
   width: 180px;
 }
 @media (min-width: 768px) {
