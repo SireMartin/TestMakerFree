@@ -1,3 +1,6 @@
 table.questions {
   min-width: 500px;
 }
+table.questions input {
+  margin: 2px 0 2px 0;
+}

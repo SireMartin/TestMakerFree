@@ -23,30 +23,3 @@
   <question-list [quiz]="quiz" *ngIf="editMode"></question-list>
   <result-list [quiz]="quiz" *ngIf="editMode"></result-list>
 </div>
-
-
-<!--<div class="quiz-edit">
-  <div>
-    <label for="title">Quiz title:</label>
-    <br />
-    <input type="text" id="title" [(ngModel)]="quiz.Title" placeholder="choose a title..."/>
-  </div>
-  <div>
-    <label for="description">Quiz description:</label>
-    <br />
-    <input type="text" id="description" [(ngModel)]="quiz.Description" placeholder="enter a description..." />
-  </div>
-  <div>
-    <label for="text">Quiz informative text:</label>
-    <br />
-    <textarea id="text" [(ngModel)]="quiz.Text" placeholder="enter a text..."></textarea>
-  </div>
-  <div>
-    <input *ngIf="editMode" type="button" value="Apply Changes" (click)="onSubmit(quiz)" />
-    <input *ngIf="!editMode" type="button" value="Create the quiz!" (click)="onSubmit(quiz)" />
-    <input type="button" value="cancel" (click)="onBack()" />
-    <question-list [quiz]="quiz" *ngIf="editMode"></question-list>
-    <result-list [quiz]="quiz" *ngIf="editMode"></result-list>
-  </div>
-</div>
--->
