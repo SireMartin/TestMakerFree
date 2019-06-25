@@ -1,4 +1,4 @@
-<div clase="panel panel-primary">
+<div class="panel panel-primary">
   <div class="panel-heading">
     <h3>Questions</h3>
   </div>
@@ -7,12 +7,14 @@
       <table class="questions">
         <thead>
           <tr>
+            <th></th>
             <th>Text</th>
             <th>Options</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let question of questions">
+            <td><img src="https://lorempixel.com/30/30/?random={{question.Id}}" /></td>
             <td>{{question.Text}}</td>
             <td>
               <input type="button" value="Edit" (click)="onEdit(question)" class="btn btn-sm btn-warning" />

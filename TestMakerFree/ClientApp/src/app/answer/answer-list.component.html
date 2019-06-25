@@ -1,27 +1,40 @@
-<h3>Answers</h3>
-<div *ngIf="answers.length > 0">
-  <table class="anwers">
-    <thead>
-      <tr>
-        <th>Text</th>
-        <th>Value</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let answer of answers">
-        <td>{{answer.Text}}</td>
-        <td>{{answer.Value}}</td>
-        <td>
-          <input type="button" value="Edit" (click)="onEdit(answer)" />
-          <input type="button" value="Delete" (click)="onDelete(answer)" />
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="panel panel-primary">
+  <div class="panel panel-heading">
+    <h3>Answers</h3>
+  </div>
+  <div class="panel panel-body">
+    <div *ngIf="answers.length > 0">
+      <table class="answers">
+        <thead>
+          <tr>
+            <th>Text</th>
+            <th>Value</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let answer of answers">
+            <td>{{answer.Text}}</td>
+            <td>{{answer.Value}}</td>
+            <td>
+              <input type="button" value="Edit" (click)="onEdit(answer)" />
+              <input type="button" value="Delete" (click)="onDelete(answer)" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--bepaalde componenten weergeven al naargelang de situatie-->
+  <ng-container *ngIf="question.Id; then allowAnswerCreation; else prohibitAnwserCreation"></ng-container>
+  <ng-template #allowAnswerCreation>
+    <div *ngIf="answers.length == 0">
+      This question has no answers (yet):
+      click the <strong>Add a new Answer</strong> button to add the first one!
+    </div>
+    <input type="button" value="Add a new Answer" (click)="onCreate()" class="btn btn-sm btn-primary" />
+  </ng-template>
+  <ng-template #prohibitAnwserCreation>
+    <div>first create the question in order to be able to create answers</div>
+  </ng-template>
 </div>
-<div *ngIf="answers.length == 0">
-  This question has no answers (yet):
-  click the <strong>Add a new Answer</strong> button to add the first one!
-</div>
-<input type="button" value="Add a new Answer" (click)="onCreate()" />
