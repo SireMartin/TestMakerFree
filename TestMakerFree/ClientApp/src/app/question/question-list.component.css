@@ -6,4 +6,8 @@ table.questions input {
 }
 table.questions img {
   border-radius: 50%;
+  margin-right: 5px;
+}
+input.btn {
+  margin-top: 15px;
 }

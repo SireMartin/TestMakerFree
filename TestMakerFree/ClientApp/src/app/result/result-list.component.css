@@ -1,3 +1,6 @@
 table.results {
   min-width: 500px;
 }
+input.btn {
+  margin-top: 15px;
+}

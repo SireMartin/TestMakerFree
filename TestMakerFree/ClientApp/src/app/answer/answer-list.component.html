@@ -17,24 +17,24 @@
             <td>{{answer.Text}}</td>
             <td>{{answer.Value}}</td>
             <td>
-              <input type="button" value="Edit" (click)="onEdit(answer)" />
-              <input type="button" value="Delete" (click)="onDelete(answer)" />
+              <input type="button" value="Edit" (click)="onEdit(answer)" class="btn btn-xs btn-warning" />
+              <input type="button" value="Delete" (click)="onDelete(answer)" class="btn btn-xs btn-danger" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <!--bepaalde componenten weergeven al naargelang de situatie-->
+    <ng-container *ngIf="question.Id; then allowAnswerCreation; else prohibitAnwserCreation"></ng-container>
+    <ng-template #allowAnswerCreation>
+      <div *ngIf="answers.length == 0">
+        This question has no answers (yet):
+        click the <strong>Add a new Answer</strong> button to add the first one!
+      </div>
+      <input type="button" value="Add a new Answer" (click)="onCreate()" class="btn btn-sm btn-primary" />
+    </ng-template>
+    <ng-template #prohibitAnwserCreation>
+      <div>first create the question in order to be able to create answers</div>
+    </ng-template>
   </div>
-  <!--bepaalde componenten weergeven al naargelang de situatie-->
-  <ng-container *ngIf="question.Id; then allowAnswerCreation; else prohibitAnwserCreation"></ng-container>
-  <ng-template #allowAnswerCreation>
-    <div *ngIf="answers.length == 0">
-      This question has no answers (yet):
-      click the <strong>Add a new Answer</strong> button to add the first one!
-    </div>
-    <input type="button" value="Add a new Answer" (click)="onCreate()" class="btn btn-sm btn-primary" />
-  </ng-template>
-  <ng-template #prohibitAnwserCreation>
-    <div>first create the question in order to be able to create answers</div>
-  </ng-template>
 </div>
