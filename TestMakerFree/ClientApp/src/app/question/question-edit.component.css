@@ -1,6 +1,9 @@
+.question-edit {
+  width: 80%;
+}
 .question-edit textarea {
   min-width: 500px;
 }
-input.btn {
+.question-edit input.btn {
   margin: 5px 5px 5px 0;
 }
