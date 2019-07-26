@@ -95,4 +95,27 @@ export class QuizEditComponent {
       Text: this.quiz.Text || ""
     })
   }
+
+  //retrieve a FormControl
+  getFormControl(name: string) {
+    return this.form.get(name);
+  }
+
+  //returns TRUE if the FormControl is valid
+  isValid(name: string) {
+    var e = this.getFormControl(name);
+    return e && e.valid;
+  }
+
+  //return TRURE if the FormControl has been changed
+  isChanged(name: string) {
+    var e = this.getFormControl(name);
+    return e && (e.dirty || e.touched);
+  }
+
+  //returns TRUE if the FormControl is invalid after user changes
+  hasError(name: string) {
+    var e = this.getFormControl(name);
+    return e && (e.dirty || e.touched) && !e.valid;
+  }
 }

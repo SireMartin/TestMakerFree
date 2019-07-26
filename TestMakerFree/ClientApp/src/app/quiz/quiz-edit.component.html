@@ -1,10 +1,14 @@
 <div class="quiz-edit">
   <h2>{{title}}</h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-group">
+    <div class="form-group" [ngClass]="{ 'has-error has-feedback' : hasError('Title') }">
       <label for="title">Quiz title:</label>
       <br />
       <input type="text" id="title" formControlName="Title" required placeholder="Choose a title..." class="form-control" />
+      <span *ngIf="hasError('Title')" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+      <div *ngIf="hasError('Title')" class="help-block">
+        This is a required field: please insert a valid title.
+      </div>
     </div>
     <div class="form-group">
       <label for="description">Quiz description:</label>
