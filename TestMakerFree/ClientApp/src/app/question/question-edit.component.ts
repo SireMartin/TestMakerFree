@@ -16,6 +16,7 @@ export class QuestionEditComponent {
   //this item will be TRUE when editing an existing question, FALSE when creating a new one
   editMode: boolean;
   form: FormGroup;
+  activityLog: string;
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -85,11 +86,38 @@ export class QuestionEditComponent {
     this.form = this.fb.group({
       Text: ["", Validators.required]
     });
+
+    this.activityLog = "";
+    this.log("Form has been initialized");
+
+    //react to form changes
+    this.form.valueChanges.subscribe(val => {
+      if (!this.form.dirty) {
+        this.log("Form model has been loaded.");
+      }
+      else {
+        this.log("Form was updated by the user.")
+      }
+    });
+  }
+
+  log(str: string) {
+    this.activityLog += "[" + new Date().toLocaleString() + "] " + str + "<br />";
   }
 
   updateForm() {
     this.form = this.fb.group({
       Text: this.question.Text || ""
+    });
+
+    //re-subscribe to valueChanges event, because the subscription is lost when the form is updated
+    this.form.valueChanges.subscribe(val => {
+      if (!this.form.dirty) {
+        this.log("Form model has been loaded.");
+      }
+      else {
+        this.log("Form was updated by the user.")
+      }
     });
   }
 
